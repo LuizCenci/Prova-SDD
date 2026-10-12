@@ -35,11 +35,12 @@ O Loanner é entregue como quatro serviços independentes: **identity** (usuári
 | Princípio | Avaliação (antes do design) | Avaliação (depois do design) |
 |---|---|---|
 | I. Microsserviços | Passa: serviços por capacidade, bancos separados | Passa: contratos em `contracts/`, sem acesso cruzado a banco |
-| II. Segurança por padrão | Passa: login, perfis, hash, CSRF, registro de quem opera | Passa: JWT assinado verificado em cada serviço; TLS na borda, entre serviços e nos bancos (T013, T014); eventos de segurança registrados; usuário inativo recusado (FR-016); `loaned_by` e `returned_by` gravados |
+| II. Segurança por padrão | Passa: login, perfis, hash, CSRF, registro de quem opera; o autocadastro público valida os dados no servidor e nunca cria administrador | Passa: JWT assinado verificado em cada serviço; TLS na borda, entre serviços e nos bancos (T013, T014); eventos de segurança registrados; usuário inativo recusado (FR-016); `loaned_by` e `returned_by` gravados |
 | III. Stack web | Passa: interface web responsiva | Passa: serviço web em Python/Jinja, mesma linguagem dos demais |
 | IV. Clean code | Passa (regra verificada na implementação) | Passa: regras em `domain/`, separadas de HTTP e banco |
 | V. Código documentado e teste primeiro | Passa (verificado nas tarefas) | Passa: testes de contrato e concorrência previstos |
 | VI. Documentação para onboarding | Passa (verificado nas tarefas) | Passa: README por serviço (inclusive o do web, T048), ADRs e glossário previstos na estrutura |
+| VII. Escopo limitado à spec | Passa: tudo o que o plano prevê se liga a um FR ou cenário da spec; a seção Out of Scope não é planejada | Passa: desativação e edição de equipamentos e pessoas cobertas pelo FR-017; login e autocadastro pela US5 e pelo FR-018; sem rota de exclusão |
 | Fluxo e gates | Passa | Passa: pipeline de CI previsto (T016) para linter, formatador e testes antes do merge |
 
 Sem violações. Complexity Tracking vazio.

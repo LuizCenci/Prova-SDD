@@ -34,6 +34,13 @@ Cada serviço responde em `/health` com 200 (dentro da rede do Compose).
 12. **Falha parcial**: parar o serviço `catalog` e abrir `/equipment`. Esperado: página de erro amigável (503), sem falha dos demais serviços.
 13. **Usuário desativado**: como admin, desativar um usuário comum que já está logado; ele tenta emprestar um item. Esperado: recusado (403) e novo login negado.
 14. **Eventos de segurança**: provocar um login falho, um 401 e um 403. Esperado: cada um aparece nos logs de segurança do serviço, sem senha nem token.
+15. **Login inválido e saída (US5)**: entrar com senha errada. Esperado: "E-mail ou senha inválidos.", sem dizer qual campo errou. Entrar corretamente, sair e abrir `/equipment`. Esperado: redireciona para `/login`.
+16. **E-mail duplicado**: cadastrar outra pessoa com o e-mail de uma já existente. Esperado: recusado com mensagem.
+17. **Edição (admin)**: alterar o nome de um equipamento com histórico. Esperado: a lista mostra o nome novo e o histórico continua no mesmo registro.
+18. **Desativar equipamento**: desativar um equipamento disponível. Esperado: some da lista de equipamentos (em qualquer filtro) e não pode ser emprestado. Desativar outro que está emprestado. Esperado: continua na lista como *emprestado* até a devolução; depois de devolvido, fica oculto.
+19. **Prazo no mesmo dia**: emprestar com data prevista igual a hoje. Esperado: aceito; aparece como *emprestado*, não atrasado.
+20. **Devolução de item atrasado**: devolver o item do cenário 8. Esperado: empréstimo encerrado; histórico mostra data prevista e data real.
+21. **Autocadastro (FR-018)**: sem login, abrir `/signup` e criar uma conta. Esperado: o formulário não oferece perfil; a conta nasce ativa como usuário comum e consegue entrar e emprestar. Repetir com o mesmo e-mail. Esperado: "Já existe uma pessoa com este e-mail."
 
 ## Critérios
-Os cenários 4 a 9 e 13 cobrem SC-001 a SC-003; o 8 cobre SC-004; 11, 12 e 14 cobrem os Princípios I e II da constituição (14 inclui eventos de segurança; o acesso à aplicação só funciona por HTTPS).
+Os cenários 4 a 9 e 13 cobrem SC-001 a SC-003; o 8 cobre SC-004; 1, 15 e 21 cobrem a US5 e o FR-018; 2, 3, 16 a 18 cobrem a US1 e o FR-017; 19 e 20 cobrem casos de borda da US2 e da US3; 11, 12 e 14 cobrem os Princípios I e II da constituição (14 inclui eventos de segurança; o acesso à aplicação só funciona por HTTPS).

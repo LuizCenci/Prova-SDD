@@ -1,3 +1,10 @@
+# Atividade Avaliativa
+## UTFPR - Campus Dois Vizinhos
+## Tópicos Especiais em Desenvolvimento de Software
+## Prof. Francisco Carlos Souza
+## Alunos: Luiz Cenci - 2554712 e Murilo Ghizzi - 2580608
+
+
 # Relatório: Loanner (controle de empréstimos de equipamentos)
 
 ## 1. Produto escolhido e escopo do MVP
@@ -17,13 +24,13 @@ Além da especificação, o trabalho gerou a constituição do projeto (microsse
 
 ## 2. Agente de IA e versão do Spec Kit
 
-- **Agente:** Claude Code (Anthropic), com as skills do Spec Kit. O trabalho usou Sonnet 5.5.
-- **Spec Kit:** versão **1.0.13** (registrada em `.specify/init-options.json`), com numeração sequencial de features.
-- **Comandos usados:** `/speckit-constitution`, `/speckit-specify`, `/speckit-clarify`, `/speckit-plan`, `/speckit-tasks` e seguido de ajustes manuais pedidos a partir da análise.
+- **Agente:** Claude Code (Anthropic), modelo Sonnet 5.5, integrado ao Spec Kit. Esse agente consta na lista oficial de integrações (Reference → Integrations).
+- **Spec Kit:** versão **1.0.13** (registrada em `.specify/init-options.json` e `.specify/integration.json`), com numeração sequencial de features.
+- **Comandos usados:** `/speckit-constitution`, `/speckit-specify`, `/speckit-clarify`, `/speckit-plan` e `/speckit-tasks`. Depois vieram ajustes manuais, pedidos ao agente a partir da análise dos artefatos.
 
 ## 3. O que o `/speckit.clarify` perguntou e como mudou a especificação
 
-A especificação inicial tinha uma seção de suposições. A clarificação partiu de quatro delas, e a ferramenta fez uma pergunta formal adicional.
+A especificação inicial tinha uma seção de suposições. A clarificação partiu de quatro delas, e a ferramenta fez mais duas perguntas (criação de contas e perfis). As seis respostas estão registradas na seção *Clarifications* do `spec.md`.
 
 | Ponto | Resposta | Efeito na especificação |
 |---|---|---|
@@ -44,8 +51,6 @@ Validaria a arquitetura antes de adotar microsserviços. Para um MVP desse taman
 Estabeleceria requisitos não funcionais como parte da especificação. Segurança, disponibilidade, desempenho, auditoria, tratamento de erros, backup e proteção dos dados deveriam ser definidos antes da implementação. Como o sistema registra quem emprestou e devolveu equipamentos, seria importante, por exemplo, determinar quais ações precisam ser auditadas e por quanto tempo esses registros devem ser mantidos.
 
 Tornaria os critérios de aceitação mensuráveis e úteis para validação. Critérios como "identificar a situação em 10 segundos" ou "90% de acerto na primeira tentativa" são difíceis de validar sem definir uma metodologia de medição. Em um projeto real, eu priorizaria critérios objetivos, que pudessem ser diretamente convertidos em testes automatizados ou procedimentos de validação com usuários.
-
-Validaria as decisões tecnológicas com base no contexto do projeto. A escolha de Python, FastAPI, PostgreSQL e demais tecnologias não deveria ser tratada como consequência automática da especificação. Em um cenário real, essas decisões seriam comparadas considerando experiência da equipe, infraestrutura disponível, custos, requisitos de segurança, suporte e facilidade de manutenção.
 
 Daria maior atenção aos casos de borda e às regras de negócio antes de gerar as tarefas. Situações como uma pessoa possuir vários equipamentos, tentativa de empréstimo simultâneo, exclusão de equipamentos com histórico, devoluções inválidas e usuários desativados deveriam estar explicitamente descritas e vinculadas a critérios de aceitação e testes. Isso reduziria ambiguidades durante a implementação.
 

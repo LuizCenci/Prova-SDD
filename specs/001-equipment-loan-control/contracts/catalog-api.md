@@ -10,4 +10,4 @@ Rede interna. Toda rota exige `Authorization: Bearer <token>` válido (assinatur
 | PATCH | `/v1/equipment/{id}` | admin | Edita ou desativa | 200; 400; 404; 409 |
 | GET | `/health` | público | Verificação de saúde | 200 |
 
-Não existe rota de exclusão (equipamentos com histórico são apenas desativados).
+Não existe rota de exclusão: equipamentos são apenas desativados (`PATCH` com `active: false`, FR-017).

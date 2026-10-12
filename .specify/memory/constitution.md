@@ -1,13 +1,12 @@
 <!--
 Sync Impact Report
-- Version change: (template, unversioned) → 1.0.0
-- Modified principles: none renamed (all principles are new; template placeholders replaced)
-- Added sections: Core Principles I–VI, Stack and Architecture Constraints,
-  Development Workflow and Quality Gates, Governance
+- Version change: 1.0.0 → 1.1.0 (MINOR: new principle added)
+- Modified principles: none
+- Added sections: Principle VII (Scope Limited to the Specification)
 - Removed sections: none
+- Templates requiring updates: none
 - Deferred items: none
-- Follow-up: specs/001-equipment-loan-control/plan.md describes a single Flask application;
-  it conflicts with Principle I (microservices) and must be revised before /speckit-tasks.
+- Follow-up: none (plan.md already follows Principle I with four services)
 -->
 # Loanner Constitution
 
@@ -68,6 +67,17 @@ update the related documentation in the same pull request. Documentation MUST be
 Portuguese, the language of the product's users and team, except for code identifiers.
 Rationale: documentation that is not kept current with the code stops being trusted.
 
+### VII. Scope Limited to the Specification
+The first version is an MVP: the smallest set of features that lets a person borrow and
+return an equipment item from end to end. No feature, screen, field, endpoint or rule MAY be
+added to a plan, task or code unless it traces back to a functional requirement or
+acceptance scenario of the spec. Items listed in the spec's Out of Scope section MUST NOT be
+planned or implemented, not even partially. When a gap is found during planning or
+implementation, the spec MUST be updated and clarified first; the agent MUST NOT fill the
+gap by assumption.
+Rationale: an MVP is only useful if it stays small; unrequested features add cost and hide
+whether the specification was understood.
+
 ## Stack and Architecture Constraints
 
 - Contracts between services MUST be versioned; a breaking change MUST create a new version
@@ -97,4 +107,4 @@ principle or materially expanded guidance, PATCH for wording clarifications. Com
 checked in every plan (Constitution Check) and in every pull request review. Principle II is
 non-negotiable and cannot be waived through Complexity Tracking.
 
-**Version**: 1.0.0 | **Ratified**: 2026-10-05 | **Last Amended**: 2026-10-05
+**Version**: 1.1.0 | **Ratified**: 2026-10-05 | **Last Amended**: 2026-10-12

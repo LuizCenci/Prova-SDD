@@ -38,7 +38,7 @@ Nenhum `NEEDS CLARIFICATION` ficou no plano. A pilha não foi definida pelo usu�
 - **Alternatives**: chave simétrica compartilhada (qualquer serviço poderia forjar tokens); sessão central consultada a cada chamada (acoplamento e latência); SSO institucional (depende de infraestrutura do cliente, fora do MVP).
 
 ## 8. Perfis e quem empresta
-- **Decision**: perfis `admin` e `user`. O usuário empresta sempre em seu próprio nome (o `loans` usa o `sub` do token como `borrower_id`). Apenas `admin` registra devolução. O primeiro administrador é criado por comando de linha no `identity`.
+- **Decision**: perfis `admin` e `user`. O usuário empresta sempre em seu próprio nome (o `loans` usa o `sub` do token como `borrower_id`). Apenas `admin` registra devolução. O primeiro administrador é criado por comando de linha no `identity`. Qualquer pessoa pode criar a própria conta pelo `POST /v1/auth/register` (FR-018), que é público e sempre grava `role = user`, mesmo que o corpo tente enviar outro perfil; somente o admin cria administradores.
 - **Rationale**: resposta B do clarify; reforça responsabilidade sobre o item.
 
 ## 9. Borda e transporte (todo tráfego criptografado)
@@ -51,7 +51,7 @@ Nenhum `NEEDS CLARIFICATION` ficou no plano. A pilha não foi definida pelo usu�
 - **Rationale**: Princípios I e V.
 
 ## 11. Observabilidade e eventos de segurança
-- **Decision**: `/health` e logs JSON em cada serviço, com id de correlação repassado entre chamadas; senhas e tokens nunca entram nos logs. Cada serviço registra eventos de segurança em um canal próprio de log: no identity, login com sucesso, login falho e tentativa de usuário inativo; em todos, respostas 401 e 403, com id do usuário (quando houver), rota e horário.
+- **Decision**: `/health` e logs JSON em cada serviço, com id de correlação repassado entre chamadas; senhas e tokens nunca entram nos logs. Cada serviço registra eventos de segurança em um canal próprio de log: no identity, login com sucesso, login falho, tentativa de usuário inativo e conta criada por autocadastro; em todos, respostas 401 e 403, com id do usuário (quando houver), rota e horário.
 - **Rationale**: Princípio II exige registrar eventos relevantes de segurança sem expor segredos nem dados pessoais além do necessário.
 
 ## 12. Usuário desativado (FR-016)

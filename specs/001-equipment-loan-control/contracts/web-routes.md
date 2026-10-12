@@ -1,12 +1,13 @@
 # Contrato: rotas do serviço web
 
-Único serviço exposto ao navegador (HTTPS). Páginas renderizadas no servidor. Toda rota exige login, exceto `/login`. Formulários `POST` levam token CSRF. O token da sessão do usuário é repassado aos serviços internos. Falhas de regra voltam à página com mensagem e status 4xx.
+Único serviço exposto ao navegador (HTTPS). Páginas renderizadas no servidor. Toda rota exige login, exceto `/login` e `/signup`. Formulários `POST` levam token CSRF. O token da sessão do usuário é repassado aos serviços internos. Falhas de regra voltam à página com mensagem e status 4xx.
 
 | Método | Rota | Perfil | Chama | Resultados |
 |---|---|---|---|---|
 | GET/POST | `/login` | público | identity `POST /v1/auth/login` | 302 para `/equipment`; 401 com mensagem se inválido |
+| GET/POST | `/signup` | público | identity `POST /v1/auth/register` | 302 para `/login`; 400 dado inválido; 409 com "Já existe uma pessoa com este e-mail."; o formulário não tem campo de perfil (FR-018) |
 | POST | `/logout` | logado | (descarta a sessão) | 302 para `/login` |
-| GET | `/equipment` | logado | catalog + loans `equipment-status` + identity `lookup` | 200; filtro `?status=available\|loaned\|overdue`; exibe pessoa, data do empréstimo, prazo e dias de atraso (FR-009, FR-010) |
+| GET | `/equipment` | logado | catalog + loans `equipment-status` + identity `lookup` | 200; filtro `?status=available\|loaned\|overdue`; exibe pessoa, data do empréstimo, prazo e dias de atraso (FR-009, FR-010); oculta equipamentos inativos sem empréstimo em aberto (FR-017) |
 | GET/POST | `/equipment/new` | admin | catalog `POST /v1/equipment` | 302; 400; 409 código duplicado |
 | GET/POST | `/equipment/{id}/edit` | admin | catalog `PATCH` | 302; 400; 409 |
 | GET/POST | `/people`, `/people/new` | admin | identity `/v1/users` | 200; 302; 400; 409 e-mail duplicado |
@@ -18,6 +19,9 @@
 Sem login: 302 para `/login`. Sem permissão: 403. Usuário desativado: 403 com a mensagem "Usuário inativo não pode pegar equipamentos emprestados." (e sem acesso após o login). Se um serviço interno estiver indisponível: página de erro amigável com status 503.
 
 ## Mensagens esperadas (FR-012)
+- "E-mail ou senha inválidos."
+- "Já existe uma pessoa com este e-mail."
+- "Usuário inativo não pode pegar equipamentos emprestados."
 - "Este equipamento já está emprestado."
 - "Já existe um equipamento com este código."
 - "A data prevista de devolução não pode ser anterior a hoje."
